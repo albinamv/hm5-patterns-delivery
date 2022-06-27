@@ -20,17 +20,6 @@ public class СhangeDateDeliveryTest {
     }
 
     @Test
-    public void shouldSendForm() {
-        UserInfo user = DataGenerator.Registration.generateUser("ru");
-        String date = DataGenerator.generateDate(6, "dd.MM.yyyy");
-        sendTheForm(user, date);
-
-        String expected = "Встреча успешно запланирована на " + date;
-        $("[data-test-id = success-notification]").shouldBe(visible, Duration.ofSeconds(15)).shouldHave(text(expected));
-
-    }
-
-    @Test
     public void shouldReplanDelivery() {
         UserInfo user = DataGenerator.Registration.generateUser("ru");
         String dateFirst = DataGenerator.generateDate(6, "dd.MM.yyyy");
