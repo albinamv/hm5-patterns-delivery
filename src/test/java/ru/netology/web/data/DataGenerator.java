@@ -35,9 +35,17 @@ public class DataGenerator {
         return cities[rnd];
     }
 
+    public static String generateWrongCity(String locale) {
+        return "Уссурийск";
+    }
+
     public static String generateName(String locale) {
         Faker faker = new Faker(new Locale(locale));
         return faker.name().firstName() + " " + faker.name().lastName();
+    }
+
+    public static String generateYoName(String locale) {
+        return "Алёна Ёркина";
     }
 
     public static String generatePhone(String locale) {
@@ -51,6 +59,18 @@ public class DataGenerator {
 
         public static UserInfo generateUser(String locale) {
             return new UserInfo(generateCity(locale), generateName(locale), generatePhone(locale));
+        }
+
+        public static UserInfo generateUserWithWrongCity(String locale) {
+            return new UserInfo(generateWrongCity(locale), generateName(locale), generatePhone(locale));
+        }
+
+        public static UserInfo generateUserWithWrongPhone(String locale) {
+            return new UserInfo(generateCity(locale), generateName(locale), generatePhone("us"));
+        }
+
+        public static UserInfo generateYoUser(String locale) {
+            return new UserInfo(generateCity(locale), generateYoName(locale), generatePhone(locale));
         }
     }
 

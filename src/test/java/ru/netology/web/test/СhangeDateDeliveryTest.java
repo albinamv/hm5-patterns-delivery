@@ -61,4 +61,32 @@ public class СhangeDateDeliveryTest {
         deliveryPage.checkDateNotification(expected);
     }
 
+    @Test
+    @DisplayName("Should send form with user, which name contains \"Ё\"")
+    public void shouldSendFormWithYoUser() {
+        UserInfo user = DataGenerator.Registration.generateYoUser("ru");
+        String date = DataGenerator.generateDate(5, "dd.MM.yyyy");
+
+        deliveryPage.sendFormWithYoUser(user, date);
+
+        String expected = "Встреча успешно запланирована на " + date;
+        deliveryPage.checkDateNotification(expected);
+    }
+
+    @Test
+    public void shouldNotSendFormWithWrongCity() {
+        UserInfo user = DataGenerator.Registration.generateUserWithWrongCity("ru");
+        String date = DataGenerator.generateDate(5, "dd.MM.yyyy");
+
+        deliveryPage.sendFormWithWrongCity(user, date);
+    }
+
+    @Test
+    public void shouldNotSendFormWithWrongPhone() {
+        UserInfo user = DataGenerator.Registration.generateUserWithWrongPhone("ru");
+        String date = DataGenerator.generateDate(5, "dd.MM.yyyy");
+
+        deliveryPage.sendFormWithWrongPhone(user, date);
+    }
+
 }

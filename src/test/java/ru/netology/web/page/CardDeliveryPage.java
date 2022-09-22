@@ -7,8 +7,7 @@ import ru.netology.web.data.DataGenerator;
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -40,16 +39,47 @@ public class CardDeliveryPage {
         replanButton.click();
     }
 
+    public void sendFormWithWrongCity(DataGenerator.UserInfo user, String date) {
+        cityField.setValue(user.getCity());
+
+        dateField.doubleClick().sendKeys(" ");
+        dateField.setValue(date);
+
+        nameField.setValue(user.getName());
+        phoneField.setValue(user.getPhone());
+        agreementBox.click();
+        sendButton.click();
+
+        cityField.closest(".input__inner").find(".input__sub").shouldHave(exactText("Доставка в выбранный город недоступна"));
+    }
+
     public void sendFormWithWrongPhone(DataGenerator.UserInfo user, String date) {
-        sendTheForm(user, date);
-        replanButton.click();
+        cityField.setValue(user.getCity());
+
+        dateField.doubleClick().sendKeys(" ");
+        dateField.setValue(date);
+
+        nameField.setValue(user.getName());
+        phoneField.setValue(user.getPhone());
+        agreementBox.click();
+        sendButton.click();
+
+        phoneField.closest(".input__inner").find(".input__sub").shouldHave(text("Мобильный телефон указан неверно"));
+    }
+
+    public void sendFormWithYoUser(DataGenerator.UserInfo user, String date) {
+        cityField.setValue(user.getCity());
+
+        dateField.doubleClick().sendKeys(" ");
+        dateField.setValue(date);
+
+        nameField.setValue(user.getName());
+        phoneField.setValue(user.getPhone());
+        agreementBox.click();
+        sendButton.click();
     }
 
     public void checkDateNotification(String expected) {
-        successNotification.shouldBe(visible, Duration.ofSeconds(15)).shouldHave(text(expected));
-    }
-
-    public void checkError(String expected) {
         successNotification.shouldBe(visible, Duration.ofSeconds(15)).shouldHave(text(expected));
     }
 
